@@ -10,6 +10,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.appfinal.ui.theme.AppFinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,10 +27,47 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    MyApp()
+                    //Greeting("Android")
                 }
             }
         }
+    }
+}
+
+@Composable
+fun MyApp(){
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "login") {
+        composable("login") {
+            LoginScreen(onNavigateHome = {
+                navController.navigate("home")
+            })
+        }
+
+        composable("home") {
+            HomeScreen(/*onNavigateHome = {
+                navController.navigate("home")
+            }*/)
+        }
+
+        /*composable("form1") {
+            Form1Screen(onNavigateForm2 = {
+                navController.navigate("form2/${it}")
+            },
+                onBack = {
+                    navController.navigateUp()
+                }
+            )
+        }*/
+
+        /*composable("form2/{nome}",
+            arguments = listOf(navArgument("nome") { type = NavType.StringType})
+        ){
+            val param = it.arguments?.getString("nome")
+            Form2Screen(param)
+        } */
     }
 }
 
