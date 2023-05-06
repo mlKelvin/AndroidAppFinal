@@ -1,24 +1,24 @@
 package com.example.appfinal
 
-import android.content.Intent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun LoginScreen(onNavigateHome: () -> Unit,
-                onNavigateCadastroUsuario: () -> Unit) {
+fun TelaCadastroUsuario(onBackNavigate: () -> Unit){
+    val navController = rememberNavController()
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -26,17 +26,9 @@ fun LoginScreen(onNavigateHome: () -> Unit,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val ctx = LocalContext.current
         var usuario by remember { mutableStateOf("") }
         var senha by remember { mutableStateOf("") }
-
-        Image( //imagem
-            painter = painterResource(id = R.drawable.viagpng),
-            contentDescription = "",
-            modifier = Modifier.size(280.dp)
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
+        var email by remember { mutableStateOf("") }
 
         OutlinedTextField( //campo usuário
             value = usuario,
@@ -51,12 +43,20 @@ fun LoginScreen(onNavigateHome: () -> Unit,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             visualTransformation = PasswordVisualTransformation(),
         )
+        OutlinedTextField( //campo e-mail
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Endereço de e-mail") },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            visualTransformation = PasswordVisualTransformation(),
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button( //botão entrar
+        Button( //botão cadastrar
             onClick = {
-                onNavigateHome()
+                onBackNavigate()
+                //navController.navigateUp()
                 /*val i = Intent(ctx, HomeScreen::class.java)
                 ctx.startActivity(i)*/
             },
@@ -67,15 +67,7 @@ fun LoginScreen(onNavigateHome: () -> Unit,
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Cyan),
             contentPadding = PaddingValues(16.dp)
         ) {
-            Text(text = "Entrar")
-        }
-
-        TextButton( //botão cadastrar
-            onClick = { onNavigateCadastroUsuario() },
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            colors = ButtonDefaults.textButtonColors(backgroundColor = Color.Transparent)
-        ) {
-            Text(text = "Criar novo usuário")
+            Text(text = "Cadastrar")
         }
     }
 }

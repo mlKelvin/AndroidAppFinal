@@ -1,6 +1,8 @@
 package com.example.appfinal
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -36,7 +39,7 @@ fun HomeScreen() {
                         navController.navigate("viagens")
                     },
                     label = {
-                        Text(text = "Viagem")
+                        Text(text = "Viagens")
                     },
                     icon = {
                         Icon(Icons.Filled.AccountBox, contentDescription = "")
@@ -58,10 +61,11 @@ fun HomeScreen() {
         }
     ){
         Column() {
-            Text(text = "teste")
+            Text(text = "Texto fixo Scaffold HomeScreen")
+            Spacer(modifier = Modifier.height(50.dp))
 
             NavHost(navController = navController,
-                startDestination = "tela1",
+                startDestination = "novo",
                 modifier = Modifier.padding(paddingValues = it)
             ) {
                 composable("novo") {

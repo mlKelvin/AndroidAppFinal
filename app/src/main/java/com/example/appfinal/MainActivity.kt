@@ -10,11 +10,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.appfinal.ui.theme.AppFinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,14 +40,24 @@ fun MyApp(){
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
             LoginScreen(onNavigateHome = {
-                navController.navigate("home")
-            })
+                    navController.navigate("home")
+                },
+                            onNavigateCadastroUsuario = {
+                    navController.navigate("cadastroUsuario")
+                }
+            )
         }
 
         composable("home") {
             HomeScreen(/*onNavigateHome = {
                 navController.navigate("home")
             }*/)
+        }
+
+        composable("cadastroUsuario") {
+            TelaCadastroUsuario(onBackNavigate = {
+                navController.navigateUp()
+            })
         }
 
         /*composable("form1") {
