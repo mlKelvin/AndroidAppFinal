@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -79,3 +80,11 @@ fun LoginScreen(onNavigateHome: () -> Unit,
         }
     }
 }
+/*
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun DefaultPreview() {
+   // LoginScreen(onNavigateHome = { /*TODO*/ }) {
+        
+   // }
+}*/

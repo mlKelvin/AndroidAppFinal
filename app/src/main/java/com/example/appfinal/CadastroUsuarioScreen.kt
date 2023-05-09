@@ -13,11 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.appfinal.viewModel.RegisterNewUserViewModel
+import com.example.appfinal.viewModel.RegisterNewUserViewModelFactory
 
 @Composable
 fun TelaCadastroUsuario(onBackNavigate: () -> Unit){
-    val navController = rememberNavController()
+    val viewModel: RegisterNewUserViewModel = viewModel(
+        factory = RegisterNewUserViewModelFactory(application)
+    )
 
     Column(
         modifier = Modifier
@@ -26,39 +30,32 @@ fun TelaCadastroUsuario(onBackNavigate: () -> Unit){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var usuario by remember { mutableStateOf("") }
-        var senha by remember { mutableStateOf("") }
-        var email by remember { mutableStateOf("") }
-
         OutlinedTextField( //campo usuário
-            value = usuario,
-            onValueChange = { usuario = it },
+            value = viewModel.name,
+            onValueChange = { viewModel.name = it },
             label = { Text("Usuário") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         )
         OutlinedTextField( //campo senha
-            value = senha,
-            onValueChange = { senha = it },
+            value = viewModel.passoword,
+            onValueChange = { viewModel.passoword = it },
             label = { Text("Senha") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             visualTransformation = PasswordVisualTransformation(),
         )
         OutlinedTextField( //campo e-mail
-            value = email,
-            onValueChange = { email = it },
+            value = viewModel.email,
+            onValueChange = { viewModel.email = it },
             label = { Text("Endereço de e-mail") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            visualTransformation = PasswordVisualTransformation(),
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button( //botão cadastrar
             onClick = {
+                viewModel.registrar()
                 onBackNavigate()
-                //navController.navigateUp()
-                /*val i = Intent(ctx, HomeScreen::class.java)
-                ctx.startActivity(i)*/
             },
             modifier = Modifier
                 //.fillMaxWidth()
