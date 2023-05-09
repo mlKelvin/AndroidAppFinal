@@ -1,5 +1,6 @@
 package com.example.appfinal.database
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -15,9 +16,9 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        fun getDatabase(context: Context): AppDatabase = INSTANCE ?: synchronized(this){
+        fun getDatabase(application: Application): AppDatabase = INSTANCE ?: synchronized(this){
             val instance = Room.databaseBuilder(
-                context.applicationContext,
+                application.applicationContext,
                 AppDatabase ::class.java,
                 "meu-db1"
             ).build()

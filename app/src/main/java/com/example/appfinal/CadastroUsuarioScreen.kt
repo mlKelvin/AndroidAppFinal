@@ -1,5 +1,6 @@
 package com.example.appfinal
 
+import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ import com.example.appfinal.viewModel.RegisterNewUserViewModelFactory
 
 @Composable
 fun TelaCadastroUsuario(onBackNavigate: () -> Unit){
+    val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewUserViewModel = viewModel(
         factory = RegisterNewUserViewModelFactory(application)
     )
