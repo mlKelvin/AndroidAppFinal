@@ -5,6 +5,7 @@ import com.example.appfinal.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserRepository(private val userDao: UserDao) {
 
@@ -15,4 +16,6 @@ class UserRepository(private val userDao: UserDao) {
             userDao.insert(user)
         }
     }
+
+    suspend fun findByName(name:String): User? = userDao.findByName(name)
 }

@@ -1,8 +1,8 @@
 package com.example.appfinal
 
-import android.content.Intent
+import android.app.Application
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -14,20 +14,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.room.Room
+import com.example.appfinal.dao.UserDao
+import com.example.appfinal.viewModel.LoginScreenViewModel
+import com.example.appfinal.viewModel.LoginScreenViewModelFactory
+import com.example.appfinal.viewModel.RegisterNewUserViewModel
+import com.example.appfinal.viewModel.RegisterNewUserViewModelFactory
 
 @Composable
 fun LoginScreen(onNavigateHome: () -> Unit,
                 onNavigateCadastroUsuario: () -> Unit) {
+
+    val application = LocalContext.current.applicationContext as Application
+    val viewModel: LoginScreenViewModel = viewModel(
+        factory = LoginScreenViewModelFactory(application)
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
-            //.background(Color.LightGray),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val ctx = LocalContext.current
         var usuario by remember { mutableStateOf("") }
         var senha by remember { mutableStateOf("") }
 
@@ -57,12 +67,15 @@ fun LoginScreen(onNavigateHome: () -> Unit,
 
         Button( //botão entrar
             onClick = {
-                onNavigateHome()
-                /*val i = Intent(ctx, HomeScreen::class.java)
-                ctx.startActivity(i)*/
+                //focusManager.clearFocus()
+                viewModel.validateLogin(onResult = {
+                    Log.i("Login", "Result ${it}")
+                    if (it){
+                        onNavigateHome()
+                    }
+                })
             },
             modifier = Modifier
-                //.fillMaxWidth()
                 .width(280.dp)
                 .height(60.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Cyan),
@@ -80,11 +93,3 @@ fun LoginScreen(onNavigateHome: () -> Unit,
         }
     }
 }
-/*
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun DefaultPreview() {
-   // LoginScreen(onNavigateHome = { /*TODO*/ }) {
-        
-   // }
-}*/
