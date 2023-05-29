@@ -61,8 +61,8 @@ fun HomeScreen() {
         }
     ){
         Column() {
-            Text(text = "Texto fixo Scaffold HomeScreen")
-            Spacer(modifier = Modifier.height(50.dp))
+            //Text(text = "Texto fixo Scaffold HomeScreen")
+            //Spacer(modifier = Modifier.height(50.dp))
 
             NavHost(navController = navController,
                 startDestination = "novo",

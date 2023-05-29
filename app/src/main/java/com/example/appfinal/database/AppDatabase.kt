@@ -1,17 +1,19 @@
 package com.example.appfinal.database
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.appfinal.dao.UserDao
+import com.example.appfinal.dao.ViagemDao
 import com.example.appfinal.entity.User
+import com.example.appfinal.entity.Viagem
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class, Viagem::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun viagemDao(): ViagemDao
 
     companion object {
         @Volatile
@@ -20,7 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
             val instance = Room.databaseBuilder(
                 application.applicationContext,
                 AppDatabase ::class.java,
-                "meu-db1"
+                "meu-db2"
             ).build()
             INSTANCE = instance
             instance

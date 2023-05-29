@@ -38,9 +38,6 @@ fun LoginScreen(onNavigateHome: () -> Unit,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var usuario by remember { mutableStateOf("") }
-        var senha by remember { mutableStateOf("") }
-
         Image( //imagem
             painter = painterResource(id = R.drawable.viagpng),
             contentDescription = "",
@@ -50,14 +47,14 @@ fun LoginScreen(onNavigateHome: () -> Unit,
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField( //campo usuário
-            value = usuario,
-            onValueChange = { usuario = it },
+            value = viewModel.name,
+            onValueChange = { viewModel.name = it },
             label = { Text("Usuário") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         )
         OutlinedTextField( //campo senha
-            value = senha,
-            onValueChange = { senha = it },
+            value = viewModel.password,
+            onValueChange = { viewModel.password = it },
             label = { Text("Senha") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             visualTransformation = PasswordVisualTransformation(),
