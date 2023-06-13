@@ -16,5 +16,5 @@ class ViagemRepository(private val viagemDao: ViagemDao) {
         }
     }
 
-    suspend fun findByDestino(destino:String): Viagem? = viagemDao.findByDestino(destino)
+    //suspend fun findByDestino(destino:String): Viagem? = viagemDao.findByDestino(destino)
 }

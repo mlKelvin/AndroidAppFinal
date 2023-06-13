@@ -12,9 +12,11 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
 @Composable
 fun HomeScreen() {
@@ -24,7 +26,7 @@ fun HomeScreen() {
             BottomNavigation {
                 BottomNavigationItem(selected = true,
                     onClick = {
-                        navController.navigate("novo")
+                        navController.navigate("novo/$id")
                     },
                     label = {
                         Text(text = "Novo")
@@ -68,8 +70,16 @@ fun HomeScreen() {
                 startDestination = "novo",
                 modifier = Modifier.padding(paddingValues = it)
             ) {
-                composable("novo") {
+                /*composable("novo") {
                     TelaNovo()
+                }*/
+                composable("novo/{userID}",
+                    arguments = listOf(navArgument("userID") { type = NavType.StringType })
+                ) {
+                    val id = it.arguments?.getString("userID")
+                    if (id != null) {
+                        TelaNovo(id)
+                    }
                 }
                 composable("viagens"){
                     TelaViagens()

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity //se for mudar nome tabela: @Entity(tableName = "user")
 data class Viagem(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val userID: Int,
     val destino: String,
     val dataInicio: String,
     val dataFim: String,

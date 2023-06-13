@@ -16,9 +16,9 @@ class RegisterNewViagemViewModel(private val viagemRepository: ViagemRepository)
     var dataFim by mutableStateOf("")
     var orcamento by mutableStateOf("")
 
-    fun registrar() {
+    fun registrar(userId: Int) {
         val orcamentoFloat = orcamento.toFloatOrNull() ?: 0.0f
-        val newViagem = Viagem(destino = destino, dataInicio = dataInicio, dataFim = dataFim, orcamento = orcamentoFloat)
+        val newViagem = Viagem(userID = userId, destino = destino, dataInicio = dataInicio, dataFim = dataFim, orcamento = orcamentoFloat)
         viagemRepository.addViagem(newViagem)
     }
 }

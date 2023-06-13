@@ -34,16 +34,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(){
+fun MyApp() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
             LoginScreen(onNavigateHome = {
-                    navController.navigate("home")
-                },
-                            onNavigateCadastroUsuario = {
+                navController.navigate("home")
+            },
+                onNavigateCadastroUsuario = {
                     navController.navigate("cadastroUsuario")
+                }
+                onNavigateCadastroViagem = { id ->
+                    navController.navigate("cadastroViagem/$id")
                 }
             )
         }
@@ -51,7 +54,8 @@ fun MyApp(){
         composable("home") {
             HomeScreen(/*onNavigateHome = {
                 navController.navigate("home")
-            }*/)
+            }*/
+            )
         }
 
         composable("cadastroUsuario") {

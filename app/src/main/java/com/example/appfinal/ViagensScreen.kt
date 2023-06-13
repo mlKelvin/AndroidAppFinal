@@ -24,7 +24,7 @@ import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
 
 @Composable
 fun TelaViagens(){
-    val application = LocalContext.current.applicationContext as Application
+    /*val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewViagemViewModel = viewModel(
         factory = RegisterNewViagemViewModelFactory(application)
     )
@@ -92,7 +92,7 @@ fun ViagemItem(viagem: Viagem, onItemClick: () -> Unit) {
                 }
             }
         }
-    }
+    }*/
 }
 
 

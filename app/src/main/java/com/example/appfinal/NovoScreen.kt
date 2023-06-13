@@ -26,7 +26,7 @@ import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TelaNovo() {
+fun TelaNovo(userID: String) {
     val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewViagemViewModel = viewModel(
         factory = RegisterNewViagemViewModelFactory(application)
@@ -80,7 +80,7 @@ fun TelaNovo() {
 
             Button(
                 onClick = {
-                    viewModel.registrar()
+                    viewModel.registrar(Integer.parseInt(userID))
                 },
                 modifier = Modifier
                     .padding(top = 16.dp)
