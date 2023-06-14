@@ -31,6 +31,8 @@ fun TelaNovo(userID: String) {
     val viewModel: RegisterNewViagemViewModel = viewModel(
         factory = RegisterNewViagemViewModelFactory(application)
     )
+
+    println(userID + "entrou tela novo")
     Scaffold(
         topBar = {
             TopAppBar(

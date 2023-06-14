@@ -24,7 +24,7 @@ import com.example.appfinal.viewModel.RegisterNewUserViewModel
 import com.example.appfinal.viewModel.RegisterNewUserViewModelFactory
 
 @Composable
-fun LoginScreen(onNavigateHome: () -> Unit,
+fun LoginScreen(onNavigateHome: (id: Int) -> Unit,
                 onNavigateCadastroUsuario: () -> Unit) {
 
     val application = LocalContext.current.applicationContext as Application
@@ -68,7 +68,10 @@ fun LoginScreen(onNavigateHome: () -> Unit,
                 viewModel.validateLogin(onResult = {
                     Log.i("Login", "Result ${it}")
                     if (it){
-                        onNavigateHome()
+                        val idAux = viewModel.buscarIdUser(viewModel.name)
+                        if (idAux != null) {
+                            onNavigateHome(idAux)
+                        }
                     }
                 })
             },

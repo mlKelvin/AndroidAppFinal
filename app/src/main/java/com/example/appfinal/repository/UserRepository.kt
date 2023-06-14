@@ -18,4 +18,6 @@ class UserRepository(private val userDao: UserDao) {
     }
 
     suspend fun findByName(name:String): User? = userDao.findByName(name)
+
+    suspend fun findIdByName(name:String): Int? = userDao.findByName(name)?.id
 }

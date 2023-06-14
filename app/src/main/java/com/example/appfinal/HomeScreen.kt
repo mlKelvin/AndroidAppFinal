@@ -19,14 +19,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(userID: String) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
             BottomNavigation {
                 BottomNavigationItem(selected = true,
                     onClick = {
-                        navController.navigate("novo/$id")
+                        navController.navigate("novo/{userID}")
                     },
                     label = {
                         Text(text = "Novo")
@@ -67,7 +67,7 @@ fun HomeScreen() {
             //Spacer(modifier = Modifier.height(50.dp))
 
             NavHost(navController = navController,
-                startDestination = "novo",
+                startDestination = "novo/{userID}",
                 modifier = Modifier.padding(paddingValues = it)
             ) {
                 /*composable("novo") {
@@ -76,10 +76,10 @@ fun HomeScreen() {
                 composable("novo/{userID}",
                     arguments = listOf(navArgument("userID") { type = NavType.StringType })
                 ) {
-                    val id = it.arguments?.getString("userID")
-                    if (id != null) {
-                        TelaNovo(id)
-                    }
+                    println(userID + "----------------------------out")
+                    if (userID != null) {
+                        println(userID + "----------------------------")
+                        TelaNovo(userID)                    }
                 }
                 composable("viagens"){
                     TelaViagens()

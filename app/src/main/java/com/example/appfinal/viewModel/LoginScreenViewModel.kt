@@ -8,6 +8,7 @@ import com.example.appfinal.repository.UserRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class LoginScreenViewModel(private val userRepository: UserRepository): ViewModel() {
 
@@ -26,6 +27,9 @@ class LoginScreenViewModel(private val userRepository: UserRepository): ViewMode
             if (!result)
                 _toastMessage.emit("Invalid login")
         }
+    }
 
+    fun buscarIdUser(userName: String) = runBlocking {
+        userRepository.findIdByName(userName)
     }
 }
