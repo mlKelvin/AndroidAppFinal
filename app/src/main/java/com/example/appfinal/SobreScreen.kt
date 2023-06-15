@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 @Composable
 fun TelaSobre(){
     Column() {
-        Text(text = "Tela Sobre")
+        Text(text = "ADS - 5 Fase")
+        Text(text = "Desenvolvimento para dispositivos móveis - DDM")
+        Text(text = "Kelvin Melim")
     }
 }
