@@ -2,16 +2,14 @@ package com.example.appfinal
 
 import android.app.Application
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,9 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.appfinal.entity.Viagem
 import com.example.appfinal.viewModel.RegisterNewViagemViewModel
 import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
@@ -30,6 +30,7 @@ import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
 @Composable
 fun TelaViagens(
     viagens: Viagem,
+    iconReason: Int,
     isItemSelected: Boolean,
     viewModel: RegisterNewViagemViewModel,
     onCardClick: (Viagem) -> Unit,
@@ -43,6 +44,13 @@ fun TelaViagens(
         backgroundColor = Color.White,
     ) {
         Row {
+            Image(
+                painter = painterResource(iconReason),
+                contentDescription = "Icon of travels",
+                modifier = Modifier
+                    .size(64.dp)
+                    .padding(end = 16.dp)
+            )
             Row(modifier = Modifier.padding(4.dp)) {
                 Column {
                     Text(
@@ -74,7 +82,13 @@ fun TelaViagens(
         ) {
             Button(
                 onClick = {
-                    viewModel.updateExpenses(viagens.id, calculateExpense(viagens.orcamento,viewModel.orcamento))
+                    val newValor: Float = try {
+                        viewModel.orcamento.toFloat()
+                    } catch (e: NumberFormatException) {
+                        0
+                        0f
+                    }
+                    viewModel.AttExpenses(viagens.id, calcularExpense(viagens.orcamento, newValor))
                     onNavigateHome()
                 },
                 modifier = Modifier
@@ -88,11 +102,7 @@ fun TelaViagens(
 
 }
 
-fun formatFloat(number: Float): String {
-    return String.format("%.2f", number)
-}
-
-fun calculateExpense(oldExpense: Float, newExpense: Float): Float {
+fun calcularExpense(oldExpense: Float, newExpense: Float): Float {
     if (newExpense != 0.0f) {
         return oldExpense + newExpense
     } else {
@@ -100,6 +110,9 @@ fun calculateExpense(oldExpense: Float, newExpense: Float): Float {
     }
 }
 
+fun formatFloat(number: Float): String {
+    return String.format("%.2f", number)
+}
 
 @Composable
 fun moreExpenses(viagens: Viagem, viewModel: RegisterNewViagemViewModel) {
@@ -125,8 +138,8 @@ fun moreExpenses(viagens: Viagem, viewModel: RegisterNewViagemViewModel) {
             enabled = false
         )
         OutlinedTextField(
-            value = viewModel.orcamento.toString(),
-            onValueChange = { viewModel.orcamento = it.toFloatOrNull() ?: 0f },
+            value = viewModel.orcamento,
+            onValueChange = { viewModel.orcamento = (it.toFloatOrNull() ?: 0f) as String },
             label = { Text("Nova Despesa") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(
@@ -147,22 +160,31 @@ fun ListaViagens(userID: String, onNavigateHome:() -> Unit) {
         factory = RegisterNewViagemViewModelFactory(application)
     )
 
-    val selectedTravelId = remember { mutableStateOf<Int?>(null) }
+    val idViagemSelecionada = remember { mutableStateOf<Int?>(null) }
 
-    viewModel.getTravels(Integer.parseInt(userID))
-    val travels by viewModel.travels.collectAsState()
+    viewModel.getViagens(Integer.parseInt(userID))
+    val viagens by viewModel.viagens.collectAsState()
 
+    val navController = rememberNavController()
+
+    /*NavHost(navController = navController,
+        modifier = Modifier.padding(paddingValues = it)
+    ) {
+        composable("novo") {
+            TelaNovo()
+        }
+    }*/
 
     LazyColumn() {
-        items(items = travels.filter { selectedTravelId.value == null || it.id == selectedTravelId.value }) { travel ->
-            val iconReason = when (travel.reason) {
-                0 -> R.drawable.bussines
+        items(items = viagens.filter { idViagemSelecionada.value == null || it.id == idViagemSelecionada.value }) { viagem ->
+            val iconReason = when (viagem.razao) {
+                0 -> R.drawable.negocios
                 else -> R.drawable.lazer
             }
-            screen(travel, iconReason, selectedTravelId.value != null, viewModel, onCardClick = {
-                selectedTravelId.value = it.id
+            TelaViagens(viagem, iconReason, idViagemSelecionada.value != null, viewModel, onCardClick = {
+                idViagemSelecionada.value = it.id
             },
-                onNavigateHome = { selectedTravelId.value = null })
+                onNavigateHome = { idViagemSelecionada.value = null })
         }
     }
 }

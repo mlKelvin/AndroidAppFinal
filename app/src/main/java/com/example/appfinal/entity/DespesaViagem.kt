@@ -4,14 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Viagem(
+data class DespesaViagem(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val userID: Int,
-    val destino: String,
-    val dataInicio: String,
-    val dataFim: String,
-    val orcamento: Float,
-    val razao: Int
+    val viagemID: Int,
+    val descricao: String,
+    val valor: Float,
 ) {
 
 }

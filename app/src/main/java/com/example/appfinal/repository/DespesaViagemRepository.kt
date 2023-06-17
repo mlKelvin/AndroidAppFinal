@@ -1,31 +1,27 @@
 package com.example.appfinal.repository
 
+import com.example.appfinal.dao.DespesaViagemDao
 import com.example.appfinal.dao.ViagemDao
+import com.example.appfinal.entity.DespesaViagem
 import com.example.appfinal.entity.Viagem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ViagemRepository(private val viagemDao: ViagemDao) {
+class DespesaViagemRepository(private val despesaViagemDao: DespesaViagemDao) {
 
     private val coroutine = CoroutineScope(Dispatchers.Main)
 
-    fun addViagem(viagem: Viagem){
+    fun addDespesaViagem(despesaViagem: DespesaViagem){
         coroutine.launch(Dispatchers.IO) {
-            viagemDao.insert(viagem)
+            despesaViagemDao.insert(despesaViagem)
         }
     }
 
-    suspend fun getAllTravels(userId: Int): List<Viagem> {
+    suspend fun getAllDespesaViagem(ViagemID: Int): List<DespesaViagem> {
         return withContext(Dispatchers.IO) {
-            viagemDao.findAllByUserId(userId)
-        }
-    }
-
-    fun attAViagem(id: Int,  orcamento: Float){
-        coroutine.launch(Dispatchers.IO){
-            viagemDao.incrementExpenses(id,orcamento)
+            despesaViagemDao.findAllByViagemId(ViagemID)
         }
     }
 }

@@ -4,16 +4,20 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.appfinal.dao.DespesaViagemDao
 import com.example.appfinal.dao.UserDao
 import com.example.appfinal.dao.ViagemDao
+import com.example.appfinal.entity.DespesaViagem
 import com.example.appfinal.entity.User
 import com.example.appfinal.entity.Viagem
 
-@Database(entities = [User::class, Viagem::class], version = 2)
+@Database(entities = [User::class, Viagem::class, DespesaViagem::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun viagemDao(): ViagemDao
+
+    abstract fun despesaViagemDao(): DespesaViagemDao
 
     companion object {
         @Volatile
@@ -22,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
             val instance = Room.databaseBuilder(
                 application.applicationContext,
                 AppDatabase ::class.java,
-                "meu-db3"
+                "meu-db5"
             ).build()
             INSTANCE = instance
             instance

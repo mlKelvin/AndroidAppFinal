@@ -82,7 +82,9 @@ fun HomeScreen(userID: String) {
                         TelaNovo(userID)                    }
                 }
                 composable("viagens"){
-                    TelaViagens()
+                    if (userID != null) {
+                        ListaViagens(userID, onNavigateHome = { navController.navigateUp() })
+                    }
                 }
                 composable("sobre"){
                     TelaSobre()
