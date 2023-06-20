@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -23,7 +24,9 @@ fun HomeScreen(userID: String) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            BottomNavigation {
+            BottomNavigation(
+                backgroundColor = CustomColors.bottomNavigationColor,
+            ) {
                 BottomNavigationItem(selected = true,
                     onClick = {
                         navController.navigate("novo/{userID}")
@@ -63,22 +66,14 @@ fun HomeScreen(userID: String) {
         }
     ){
         Column() {
-            //Text(text = "Texto fixo Scaffold HomeScreen")
-            //Spacer(modifier = Modifier.height(50.dp))
-
             NavHost(navController = navController,
                 startDestination = "novo/{userID}",
                 modifier = Modifier.padding(paddingValues = it)
             ) {
-                /*composable("novo") {
-                    TelaNovo()
-                }*/
                 composable("novo/{userID}",
                     arguments = listOf(navArgument("userID") { type = NavType.StringType })
                 ) {
-                    println(userID + "----------------------------out")
                     if (userID != null) {
-                        println(userID + "----------------------------")
                         TelaNovo(userID)                    }
                 }
                 composable("viagens"){
@@ -93,4 +88,9 @@ fun HomeScreen(userID: String) {
         }
 
     }
+}
+
+object CustomColors {
+    val darkYellow = Color(0xFFA56F00)
+    val bottomNavigationColor = darkYellow
 }

@@ -46,7 +46,7 @@ fun TelaViagens(
         Row {
             Image(
                 painter = painterResource(iconReason),
-                contentDescription = "Icon of travels",
+                contentDescription = "Icone viagens",
                 modifier = Modifier
                     .size(64.dp)
                     .padding(end = 16.dp)
@@ -58,11 +58,11 @@ fun TelaViagens(
                         style = MaterialTheme.typography.subtitle1
                     )
                     Text(
-                        text = "${viagens.dataInicio} --> ${viagens.dataFim}",
+                        text = "${viagens.dataInicio} à ${viagens.dataFim}",
                         style = MaterialTheme.typography.subtitle2
                     )
                     Text(
-                        text = "Valor Total: ${formatFloat(viagens.orcamento)}R$",
+                        text = "Valor total: ${formatFloat(viagens.orcamento)}R$",
                         style = MaterialTheme.typography.subtitle2
                     )
                 }
@@ -71,7 +71,8 @@ fun TelaViagens(
         }
 
     }
-    if (isItemSelected) {
+    /*if (isItemSelected) {
+        //ListarDespesas(1, onNavigateHome)
         moreExpenses(viagens, viewModel = viewModel)
         Column(
             modifier = Modifier
@@ -98,7 +99,7 @@ fun TelaViagens(
                 Text("Atualizar")
             }
         }
-    }
+    }*/
 
 }
 
@@ -164,16 +165,6 @@ fun ListaViagens(userID: String, onNavigateHome:() -> Unit) {
 
     viewModel.getViagens(Integer.parseInt(userID))
     val viagens by viewModel.viagens.collectAsState()
-
-    val navController = rememberNavController()
-
-    /*NavHost(navController = navController,
-        modifier = Modifier.padding(paddingValues = it)
-    ) {
-        composable("novo") {
-            TelaNovo()
-        }
-    }*/
 
     LazyColumn() {
         items(items = viagens.filter { idViagemSelecionada.value == null || it.id == idViagemSelecionada.value }) { viagem ->

@@ -16,8 +16,6 @@ class LoginScreenViewModel(private val userRepository: UserRepository): ViewMode
     var password by mutableStateOf("")
 
     private val _toastMessage = MutableSharedFlow<String>()
-    val toastMessage = _toastMessage.asSharedFlow()
-
 
     fun validateLogin(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {

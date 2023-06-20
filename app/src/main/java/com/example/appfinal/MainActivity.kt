@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,13 +24,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppFinalTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     MyApp()
-                    //Greeting("Android")
                 }
             }
         }
@@ -63,23 +63,6 @@ fun MyApp() {
                 navController.navigateUp()
             })
         }
-
-        /*composable("form1") {
-            Form1Screen(onNavigateForm2 = {
-                navController.navigate("form2/${it}")
-            },
-                onBack = {
-                    navController.navigateUp()
-                }
-            )
-        }*/
-
-        /*composable("form2/{nome}",
-            arguments = listOf(navArgument("nome") { type = NavType.StringType})
-        ){
-            val param = it.arguments?.getString("nome")
-            Form2Screen(param)
-        } */
     }
 }
 

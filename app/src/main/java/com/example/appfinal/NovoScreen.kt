@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -27,16 +28,17 @@ import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TelaNovo(userID: String) {
+    val darkYellow = Color(0xFFA56F00)
+    var OpSelect by remember { mutableStateOf(0) }
     val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewViagemViewModel = viewModel(
         factory = RegisterNewViagemViewModelFactory(application)
     )
-
-    println(userID + "entrou tela novo")
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Cadastre uma nova viagem") },
+                backgroundColor = darkYellow,
                 navigationIcon = {
                 }
             )
@@ -52,33 +54,73 @@ fun TelaNovo(userID: String) {
             OutlinedTextField(
                 value = viewModel.destino,
                 onValueChange = { viewModel.destino = it },
-                label = { Text("Destino") },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("Destino",
+                          style = TextStyle(color = Color.DarkGray)) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = Color.Black,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray
+                ),
             )
 
             OutlinedTextField(
                 value = viewModel.dataInicio,
                 onValueChange = { viewModel.dataInicio = it },
-                label = { Text("Data Inicial") },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("Data Inicial",
+                          style = TextStyle(color = Color.DarkGray)) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = Color.Black,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray
+                ),
             )
 
             OutlinedTextField(
                 value = viewModel.dataFim,
                 onValueChange = { viewModel.dataFim = it },
-                label = { Text("Data Final") },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("Data Final",
+                          style = TextStyle(color = Color.DarkGray)) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = Color.Black,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray
+                ),
             )
 
             OutlinedTextField(
                 value = viewModel.orcamento,
                 onValueChange = { viewModel.orcamento = it },
-                label = { Text("Orçamento") },
+                label = { Text("Orçamento",
+                          style = TextStyle(color = Color.DarkGray)) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = Color.Black,
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.DarkGray
+                ),
             )
+
+            Row {
+                RadioButton(
+                    selected = OpSelect == 0,
+                    onClick = { viewModel.razao = 0 /*OpSelect = 0*/ },
+                )
+                Text("Lazer", Modifier.padding(start = 6.dp, top = 10.dp))
+
+                Spacer(modifier = Modifier.width(16.dp))
+                RadioButton(
+                    selected = OpSelect == 1,
+                    onClick = { OpSelect = 1 },
+                )
+                Text("Trabalho", Modifier.padding(start = 6.dp, top = 10.dp))
+
+            }
 
             Button(
                 onClick = {
@@ -86,7 +128,8 @@ fun TelaNovo(userID: String) {
                 },
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = darkYellow)
             ) {
                 Text(text = "Confirmar")
             }
