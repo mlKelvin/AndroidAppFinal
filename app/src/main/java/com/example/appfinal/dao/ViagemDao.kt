@@ -17,8 +17,8 @@ interface ViagemDao {
     @Update
     suspend fun update(viagem: Viagem)
 
-    @Query("UPDATE Viagem SET orcamento = :newOrcamento WHERE id = :id ")
-    suspend fun incrementExpenses(id: Int, newOrcamento: Float)
+    @Query("UPDATE Viagem SET orcamento = orcamento + :newOrcamento WHERE id = :id ")
+    suspend fun adicionarDespesa(id: Int, newOrcamento: Float)
 
     @Delete
     suspend fun delete(viagem: Viagem)

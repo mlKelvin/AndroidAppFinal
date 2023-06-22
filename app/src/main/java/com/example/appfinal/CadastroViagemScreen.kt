@@ -2,8 +2,6 @@ package com.example.appfinal
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -13,15 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
-import com.example.appfinal.viewModel.LoginScreenViewModel
-import com.example.appfinal.viewModel.LoginScreenViewModelFactory
 import com.example.appfinal.viewModel.RegisterNewViagemViewModel
 import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
 
@@ -35,8 +27,8 @@ fun TelaNovo(userID: String) {
         factory = RegisterNewViagemViewModelFactory(application)
     )
     LaunchedEffect(OpSelect) {
-        val razao = OpSelect
-        viewModel.razao = razao
+        val motivo = OpSelect
+        viewModel.motivo = motivo
     }
     Scaffold(
         topBar = {

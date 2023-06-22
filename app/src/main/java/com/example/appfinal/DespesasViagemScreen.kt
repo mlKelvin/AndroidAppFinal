@@ -42,6 +42,9 @@ fun ListarDespesas(onBackNavigate: () -> Unit, viagemId: Int, vNavController: Na
     val viewModel: RegisterNewDespesaViagemViewModel = viewModel(
         factory = RegisterNewDespesaViagemViewModelFactory(application))
     viewModel.getDespesaViagens(viagemId)
+    val viewModelViagem: RegisterNewViagemViewModel = viewModel(
+        factory = RegisterNewViagemViewModelFactory(application)
+    )
     val despesaViagens by viewModel.despesasViagem.collectAsState()
 
     Scaffold(
@@ -97,6 +100,7 @@ fun ListarDespesas(onBackNavigate: () -> Unit, viagemId: Int, vNavController: Na
                 Button( //botão cadastrar
                     onClick = {
                         viewModel.registrar(viagemId = viagemId)
+                        viewModelViagem.AttOrcamento(viagemId, viewModel.valor.toFloat())
                     },
                     modifier = Modifier
                         .fillMaxWidth()

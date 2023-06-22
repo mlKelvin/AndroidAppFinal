@@ -16,16 +16,16 @@ class RegisterNewViagemViewModel(private val viagemRepository: ViagemRepository)
     var dataInicio by mutableStateOf("")
     var dataFim by mutableStateOf("")
     var orcamento by mutableStateOf("")
-    var razao by  mutableStateOf(0)
+    var motivo by  mutableStateOf(0)
 
     fun registrar(userId: Int) {
         val orcamentoFloat = orcamento.toFloatOrNull() ?: 0.0f
-        val newViagem = Viagem(userID = userId, destino = destino, dataInicio = dataInicio, dataFim = dataFim, orcamento = orcamentoFloat, razao = razao)
+        val newViagem = Viagem(userID = userId, destino = destino, dataInicio = dataInicio, dataFim = dataFim, orcamento = orcamentoFloat, motivo = motivo)
         viagemRepository.addViagem(newViagem)
     }
 
-    fun AttExpenses(id: Int, orcamento: Float){
-        viagemRepository.attAViagem(id, orcamento)
+    fun AttOrcamento(id: Int, orcamento: Float){
+        viagemRepository.attViagem(id, orcamento)
     }
 
     val viagens: MutableStateFlow<List<Viagem>> = MutableStateFlow(emptyList())

@@ -11,7 +11,7 @@ data class Viagem(
     val dataInicio: String,
     val dataFim: String,
     val orcamento: Float,
-    val razao: Int
+    val motivo: Int
 ) {
 
 }

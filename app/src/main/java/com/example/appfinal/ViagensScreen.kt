@@ -90,7 +90,7 @@ fun ListaViagens(userID: String, onNavigateHome:() -> Unit, vNavController: NavC
 
     LazyColumn() {
         items(items = viagens.filter { idViagemSelecionada.value == null || it.id == idViagemSelecionada.value }) { viagem ->
-            val iconReason = when (viagem.razao) {
+            val iconReason = when (viagem.motivo) {
                 0 -> R.drawable.lazer
                 else -> R.drawable.negocios
             }

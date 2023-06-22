@@ -23,9 +23,9 @@ class ViagemRepository(private val viagemDao: ViagemDao) {
         }
     }
 
-    fun attAViagem(id: Int,  orcamento: Float){
+    fun attViagem(id: Int,  orcamento: Float){
         coroutine.launch(Dispatchers.IO){
-            viagemDao.incrementExpenses(id,orcamento)
+            viagemDao.adicionarDespesa(id,orcamento)
         }
     }
 }
