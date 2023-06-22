@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,11 +36,14 @@ fun TelaViagens(
     viewModel: RegisterNewViagemViewModel,
     onCardClick: (Viagem) -> Unit,
     onNavigateHome: () -> Unit,
+    vNavController: NavController,
 ){
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onCardClick(viagens) },
+            .clickable {
+                onCardClick(viagens)
+                vNavController.navigate("despesa_viagem/${viagens.id}")},
         elevation = 8.dp,
         backgroundColor = Color.White,
     ) {
@@ -72,6 +76,8 @@ fun TelaViagens(
 
     }
     /*if (isItemSelected) {
+        vNavController.navigate("despesa_viagem")
+    }
         //ListarDespesas(1, onNavigateHome)
         moreExpenses(viagens, viewModel = viewModel)
         Column(
@@ -155,7 +161,7 @@ fun moreExpenses(viagens: Viagem, viewModel: RegisterNewViagemViewModel) {
 }
 
 @Composable
-fun ListaViagens(userID: String, onNavigateHome:() -> Unit) {
+fun ListaViagens(userID: String, onNavigateHome:() -> Unit, vNavController: NavController) {
     val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewViagemViewModel = viewModel(
         factory = RegisterNewViagemViewModelFactory(application)
@@ -172,10 +178,28 @@ fun ListaViagens(userID: String, onNavigateHome:() -> Unit) {
                 0 -> R.drawable.negocios
                 else -> R.drawable.lazer
             }
-            TelaViagens(viagem, iconReason, idViagemSelecionada.value != null, viewModel, onCardClick = {
-                idViagemSelecionada.value = it.id
-            },
-                onNavigateHome = { idViagemSelecionada.value = null })
+            TelaViagens(viagem,
+                        iconReason,
+            idViagemSelecionada.value != null, viewModel,
+                        onCardClick = {idViagemSelecionada.value = it.id},
+                        onNavigateHome = { idViagemSelecionada.value = null },
+                        vNavController)
         }
     }
+    /*
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "viagens") {
+        composable("viagens"){
+            if (userID != null) {
+                ListaViagens(userID, onNavigateHome = { navController.navigateUp() })
+            }
+        }
+
+        composable("cadastroUsuario") {
+            TelaCadastroUsuario(onBackNavigate = {
+                navController.navigateUp()
+            })
+        }
+    }*/
 }

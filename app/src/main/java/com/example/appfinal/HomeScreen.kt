@@ -74,15 +74,23 @@ fun HomeScreen(userID: String) {
                     arguments = listOf(navArgument("userID") { type = NavType.StringType })
                 ) {
                     if (userID != null) {
-                        TelaNovo(userID)                    }
+                        TelaNovo(userID)
+                    }
                 }
                 composable("viagens"){
                     if (userID != null) {
-                        ListaViagens(userID, onNavigateHome = { navController.navigateUp() })
+                        ListaViagens(userID, onNavigateHome = { navController.navigateUp() }, navController)
                     }
                 }
                 composable("sobre"){
                     TelaSobre()
+                }
+                composable("despesa_viagem/{viagemId}",
+                    arguments = listOf(navArgument("viagemId") { type = NavType.StringType })
+                ){
+                    val vId = it.arguments?.getString("viagemId")
+                    if (vId != null)
+                        ListarDespesasAux(onBackNavigate = { navController.navigateUp() }, vId.toInt())
                 }
             }
         }
