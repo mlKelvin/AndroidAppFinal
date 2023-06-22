@@ -32,10 +32,7 @@ import com.example.appfinal.viewModel.RegisterNewViagemViewModelFactory
 fun TelaViagens(
     viagens: Viagem,
     iconReason: Int,
-    isItemSelected: Boolean,
-    viewModel: RegisterNewViagemViewModel,
     onCardClick: (Viagem) -> Unit,
-    onNavigateHome: () -> Unit,
     vNavController: NavController,
 ){
     Card(
@@ -71,93 +68,12 @@ fun TelaViagens(
                     )
                 }
             }
-
         }
-
-    }
-    /*if (isItemSelected) {
-        vNavController.navigate("despesa_viagem")
-    }
-        //ListarDespesas(1, onNavigateHome)
-        moreExpenses(viagens, viewModel = viewModel)
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Button(
-                onClick = {
-                    val newValor: Float = try {
-                        viewModel.orcamento.toFloat()
-                    } catch (e: NumberFormatException) {
-                        0
-                        0f
-                    }
-                    viewModel.AttExpenses(viagens.id, calcularExpense(viagens.orcamento, newValor))
-                    onNavigateHome()
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .width(150.dp)
-            ) {
-                Text("Atualizar")
-            }
-        }
-    }*/
-
-}
-
-fun calcularExpense(oldExpense: Float, newExpense: Float): Float {
-    if (newExpense != 0.0f) {
-        return oldExpense + newExpense
-    } else {
-        return oldExpense
     }
 }
 
 fun formatFloat(number: Float): String {
     return String.format("%.2f", number)
-}
-
-@Composable
-fun moreExpenses(viagens: Viagem, viewModel: RegisterNewViagemViewModel) {
-    var orcamento = viagens.orcamento
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        OutlinedTextField(
-            value = orcamento.toString(),
-            onValueChange = { orcamento = it.toFloatOrNull() ?: 0f },
-            label = { Text("Despesa atual") },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(
-                onNext = {
-
-                }
-            ),
-            modifier = Modifier.padding(16.dp),
-            enabled = false
-        )
-        OutlinedTextField(
-            value = viewModel.orcamento,
-            onValueChange = { viewModel.orcamento = (it.toFloatOrNull() ?: 0f) as String },
-            label = { Text("Nova Despesa") },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(
-                onNext = {
-
-                }
-            ),
-            modifier = Modifier.padding(16.dp)
-        ).toString()
-    }
-
 }
 
 @Composable
@@ -175,31 +91,13 @@ fun ListaViagens(userID: String, onNavigateHome:() -> Unit, vNavController: NavC
     LazyColumn() {
         items(items = viagens.filter { idViagemSelecionada.value == null || it.id == idViagemSelecionada.value }) { viagem ->
             val iconReason = when (viagem.razao) {
-                0 -> R.drawable.negocios
-                else -> R.drawable.lazer
+                0 -> R.drawable.lazer
+                else -> R.drawable.negocios
             }
             TelaViagens(viagem,
                         iconReason,
-            idViagemSelecionada.value != null, viewModel,
                         onCardClick = {idViagemSelecionada.value = it.id},
-                        onNavigateHome = { idViagemSelecionada.value = null },
                         vNavController)
         }
     }
-    /*
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "viagens") {
-        composable("viagens"){
-            if (userID != null) {
-                ListaViagens(userID, onNavigateHome = { navController.navigateUp() })
-            }
-        }
-
-        composable("cadastroUsuario") {
-            TelaCadastroUsuario(onBackNavigate = {
-                navController.navigateUp()
-            })
-        }
-    }*/
 }

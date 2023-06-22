@@ -34,6 +34,10 @@ fun TelaNovo(userID: String) {
     val viewModel: RegisterNewViagemViewModel = viewModel(
         factory = RegisterNewViagemViewModelFactory(application)
     )
+    LaunchedEffect(OpSelect) {
+        val razao = OpSelect
+        viewModel.razao = razao
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -109,7 +113,7 @@ fun TelaNovo(userID: String) {
             Row {
                 RadioButton(
                     selected = OpSelect == 0,
-                    onClick = { viewModel.razao = 0 /*OpSelect = 0*/ },
+                    onClick = { OpSelect = 0 },
                 )
                 Text("Lazer", Modifier.padding(start = 6.dp, top = 10.dp))
 
